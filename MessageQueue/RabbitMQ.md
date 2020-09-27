@@ -8,6 +8,25 @@
 
 RabbitMQ是一个开源的AMQP实现，服务器端用Erlang语言编写，多用于在分布式系统中存储转发消息，在易用性、扩展性、高可用性等方面表现不俗。
 
+### 常用MQ
+
+|               | ActiveMQ | RabbitMQ               | Kafka           |
+| ------------- | -------- | ---------------------- | --------------- |
+| 所属社区/公司 | Apache   | Mozilla Public License | Apache/LinkedIn |
+| 开发语言      | Java     | Erlang                 | Java            |
+| 支持协议      | JMS      | AMQP                   | AMQP            |
+| 事务          | 支持     | 不支持                 | 不支持          |
+| 集群          | 支持     | 支持                   | 支持            |
+| 动态扩容      | 不支持   | 不支持                 | 支持            |
+
+
+
+## 什么是Rabbit MQ
+
+`RabbitMQ` 是由erlang开发的 `AMOP(Advaned Message Queue Protocol)` 的开源实现。
+
+
+
 ## Dcoker下RabbitMQ的安装
 
 ```bash
@@ -384,7 +403,7 @@ channel.basicConsume(queueName,true,new DefaultConsumer(channel){
 ```markdown
 # 通配符
 	* 只匹配一个词
-	# 匹配一个或多个词
+	# 匹配零个或多个词
 ```
 
 #### 1.生产者
