@@ -198,3 +198,52 @@ public void receive2(String message) {
 }
 ```
 
+## RabbitMQ 序列化转 Json
+
+在 `RabbitTemplate` 类中可以找到 `MessageConverter`消息转换器，它的默认实现类为 `SimpleMessageConverter` 其中默认序列化为 jdk 自带序列化，现在想转换为Json的序列化器，找到 `MessageConverter` 中实现类
+
+![](image/rabbitmq1.jpg)
+
+可自己创建配置类，进行 Json 序列化
+
+**配置类：**
+
+```java
+/**
+ * MQ配置类
+ */
+@Configuration
+public class MyAMQPConfig {
+
+    /**
+     * 实现消息转换为Json
+     * @return
+     */
+    @Bean
+    public MessageConverter messageConverter(){
+        return new Jackson2JsonMessageConverter();
+    }
+
+}
+```
+
+运行效果：
+
+![](image/RabbitMQ02.jpg)
+
+## AmqpAdmin管理组件的使用
+
+当我们有些消息队列和交换机没有创建，那么可以使用 `AmqpAdmin` 来进行创建 `Exchange`、`Queue`、`Binding`等。
+
+```java
+public void create(){
+    //创建一个Exchange
+	amqpAdmin.declareExchange(new DirectExchange("amqpadmin.exchange"));
+	//创建一个Queue
+    amqpAdmin.declareQueue(new Queue("amqpadmin.queue",true));
+    //创建绑定规则，让Exchange与Queue进行绑定
+    amqpAdmin.declareBinding(new Binding("amqpadmin.queue",Binding.DestinationType.QUEUE,"amqpadmin.exchange",
+            "amqp.key",null));
+}
+```
+
